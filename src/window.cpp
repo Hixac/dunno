@@ -8,7 +8,7 @@ namespace My {
     Window::Window(uint32_t x_size, uint32_t y_size, std::string_view name)
         : m_name(std::move(name)), m_x_size(x_size), m_y_size(y_size) {
 
-        m_window = glfwCreateWindow(200, 200, "Triangle", nullptr, nullptr);
+        m_window = glfwCreateWindow(x_size, y_size, name.data(), nullptr, nullptr);
         
         if (m_window == nullptr) {
             glfwTerminate();
