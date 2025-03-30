@@ -11,6 +11,9 @@ namespace My {
         Window(uint32_t x_size, uint32_t y_size, std::string_view name);
         ~Window();
 
+        void NewFrame();
+        void Render();
+        
         void SwapBuffers();
         bool CheckHealth();
         
