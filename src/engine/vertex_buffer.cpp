@@ -1,4 +1,4 @@
-#include <vertex_buffer.hpp>
+#include <engine/vertex_buffer.hpp>
 
 #include <glad/glad.h>
 

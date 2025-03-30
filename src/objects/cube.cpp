@@ -28,7 +28,7 @@ namespace Object {
 
     void Cube::Render() {
         m_prog.Use();
-        m_prog.SetVarMat4("transform", (View::proj * View::view * transform).Get());
+        m_prog.SetVarMat4("transform", (View::Get().proj * View::Get().view * transform).Get());
         
         m_tex.Bind();
         

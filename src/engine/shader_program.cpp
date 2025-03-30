@@ -23,6 +23,14 @@ namespace My {
 
     void Program::LinkAll() {
         glLinkProgram(m_randid);
+
+        GLint success;
+        glGetProgramiv(m_randid, GL_LINK_STATUS, &success);
+        if (!success) {
+            char log[512];
+            glGetProgramInfoLog(m_randid, 512, nullptr, log);
+            std::cerr << "FATAL: link program error log: " << log << std::endl;
+        }
     }
 
     void Program::Use() {

@@ -7,25 +7,26 @@
 
 int main(int argc, const char **argv) {
 
-    My::Window window(1000, 1000, "Haro");
+    My::Window window(640, 360, "Haro");
 
     OpenGl::init();
 
     Object::Cube cube;
+    
     cube.SetTexture("res/me.jpg");
-    
-    View::view.Translate({0, 0, -30});
 
-    cube.transform.Translate({0, 0, -5});
+    cube.transform.Translate({0, 0, -2});
     
+    View::Get().view.Translate({0, 0, -2});
+
     while (window.CheckHealth()) {
         window.NewFrame();
 
         OpenGl::clear();
-        
-        cube.transform.Rotate(2, {0, 1, 1});
 
+        cube.transform.Rotate(1, {0, 1, 1});
         cube.Render();
+
         window.Render();
         
         glfwPollEvents();

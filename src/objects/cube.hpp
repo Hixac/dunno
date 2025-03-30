@@ -17,9 +17,9 @@ namespace Object {
         Transform transform;
 
     private:
-        My::Program m_prog;
-        My::Texture m_tex;
         My::Vertex m_vert;
+        My::Texture m_tex;
+        My::Program m_prog;
     };
     
 }

@@ -3,6 +3,7 @@ DIR_LIBS := -Lext/glfw-static/ -Lext/glm/
 LIBS := -lglfw3 -lglm
 
 SOURCES := $(shell find src/ -name '*.cpp')
+HEADERS := $(shell find src/ -name '*.hpp')
 OBJS := $(notdir $(SOURCES:%.cpp=%.o))
 OBJS += glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o
 
