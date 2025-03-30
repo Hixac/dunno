@@ -1,35 +1,44 @@
-INCS = -Iext/glfw-static/include/ -Iext/glad/include/ -Isrc/
-LIBS = -Lext/glfw-static/
+INCS := -Iext/glfw-static/include/ -Iext/glad/include/ -Isrc/ -Isrc/ -Iext/stb/ -Iext/imgui/
+DIR_LIBS := -Lext/glfw-static/ -Lext/glm/
+LIBS := -lglfw3 -lglm
 
-OBJS = main.o window.o glad.o shader_program.o shader.o vertex_array.o vertex_buffer.o
+SOURCES := $(shell find src/ -name '*.cpp')
+OBJS := $(notdir $(SOURCES:%.cpp=%.o))
+OBJS += glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o
 
-EXEC = main
+CXX := g++
+FLAGS := -std=c++23 -Wall -Wpedantic
+
+EXEC := main
+
+.PHONY: all debug main_goal clean
 
 all: main_goal
 
 main_goal: $(OBJS)
-	g++ -o $(EXEC) $(OBJS) $(LIBS) -lglfw3
+	$(CXX) $(FLAGS) -o $(EXEC) $(OBJS) $(DIR_LIBS) $(LIBS)
 
-main.o: src/main.cpp 
-	g++ -c src/main.cpp $(INCS)
+%.o: src/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
 
-window.o: src/window.cpp
-	g++ -c src/window.cpp $(INCS)
+%.o: src/engine/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
 
-shader_program.o: src/shader_program.cpp
-	g++ -c src/shader_program.cpp $(INCS)
+%.o: src/transforms/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
 
-shader.o: src/shader.cpp
-	g++ -c src/shader.cpp $(INCS)
+%.o: src/objects/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
 
-vertex_array.o: src/vertex_array.cpp
-	g++ -c src/vertex_array.cpp $(INCS)
-
-vertex_buffer.o: src/vertex_buffer.cpp
-	g++ -c src/vertex_buffer.cpp $(INCS)
+%.o: ext/imgui/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
 
 glad.o: ext/glad/src/glad.c
-	g++ -c ext/glad/src/glad.c -Iext/glad/include/
+	gcc -c $^ -Iext/glad/include/
 
 clean:
-	rm *.o $(EXEC)
+	rm -f *.o $(EXEC)
+
+debug: FLAGS += -g
+debug: clean main_goal
+	gdb $(EXEC)
