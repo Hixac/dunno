@@ -31,6 +31,9 @@ main_goal: $(OBJS)
 %.o: src/objects/%.cpp
 	$(CXX) $(FLAGS) -c $^ $(INCS)
 
+%.o: src/misc/%.cpp
+	$(CXX) $(FLAGS) -c $^ $(INCS)
+
 %.o: ext/imgui/%.cpp
 	$(CXX) $(FLAGS) -c $^ $(INCS)
 

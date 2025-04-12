@@ -1,6 +1,7 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include <transforms/vector.hpp>
+
 #include <glm/gtc/matrix_transform.hpp>
 
 using vec2 = glm::vec2;
@@ -37,6 +38,8 @@ namespace Object {
 
         Transform Ortho(float left, float right, float bottom, float top, float z_near, float z_far);
         Transform Perspective(float fovy, float aspect, float z_near, float z_far);
+
+        Transform Reset();
         
         mat4 Get();
         

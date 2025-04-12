@@ -70,6 +70,12 @@ namespace Object {
 
         return *this;
     }
+
+    Transform Transform::Reset() {
+        m_trans = mat4(1.f);
+
+        return *this;
+    }
     
     mat4 Transform::Get() {
         return m_trans;

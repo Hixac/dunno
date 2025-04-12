@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include <misc/key_listener.hpp>
+
 namespace My {
 
     Window::Window(uint32_t x_size, uint32_t y_size, std::string_view name)
@@ -14,6 +16,7 @@ namespace My {
         glfwSetErrorCallback([](int error, const char* description) {
             fprintf(stderr, "Error: %s\n", description);
         });
+
         
         if (!glfwInit()) {
             std::cout << "FATAL: glfw hasn't initialized well!" << std::endl;
@@ -28,7 +31,9 @@ namespace My {
             std::cout << "FATAL: glfw window hasn't created well!" << std::endl;
             std::abort();
         }
-        
+
+        glfwSetKeyCallback(m_window, Misc::_key_callback);
+            
         glfwMakeContextCurrent(m_window);
         glfwSwapInterval(1);
 		IMGUI_CHECKVERSION();
@@ -47,6 +52,7 @@ namespace My {
     void Window::Render() {
         ImGui::Render();
 	    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        glfwPollEvents();
     }
 
     void Window::NewFrame() {

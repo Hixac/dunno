@@ -25,6 +25,11 @@ namespace MyGui {
             ImGui::SliderFloat(name.data(), &v, v_min, v_max);
             return *this;
         }
+
+        Frame sliders3(std::string_view name, float* arr, float v_min, float v_max) {
+            ImGui::SliderFloat3(name.data(), arr, v_min, v_max);
+            return *this;
+        }
         
         void end() {
             ImGui::End();
