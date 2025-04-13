@@ -1,7 +1,5 @@
 #pragma once
 
-#include <transforms/vector.hpp>
-
 #include <glm/gtc/matrix_transform.hpp>
 
 using vec2 = glm::vec2;
@@ -11,6 +9,8 @@ using mat4 = glm::mat4;
 
 namespace Object {
 
+    using namespace glm;
+    
     class Transform {
     public:
         Transform(float p);
@@ -36,6 +36,7 @@ namespace Object {
         Transform Scale(vec3 size);
         Transform Translate(vec3 whence);
 
+        Transform LookAt(vec3 eye, vec3 center, vec3 up);
         Transform Ortho(float left, float right, float bottom, float top, float z_near, float z_far);
         Transform Perspective(float fovy, float aspect, float z_near, float z_far);
 

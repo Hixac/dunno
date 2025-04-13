@@ -6,8 +6,6 @@
 #include <cstdlib>
 #include <iostream>
 
-#include <misc/key_listener.hpp>
-
 namespace My {
 
     Window::Window(uint32_t x_size, uint32_t y_size, std::string_view name)
@@ -16,7 +14,6 @@ namespace My {
         glfwSetErrorCallback([](int error, const char* description) {
             fprintf(stderr, "Error: %s\n", description);
         });
-
         
         if (!glfwInit()) {
             std::cout << "FATAL: glfw hasn't initialized well!" << std::endl;
@@ -32,6 +29,10 @@ namespace My {
             std::abort();
         }
 
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        
+        glfwSetMouseButtonCallback(m_window, Misc::_mouse_callback);
+        glfwSetCursorPosCallback(m_window, Misc::_cursor_callback);
         glfwSetKeyCallback(m_window, Misc::_key_callback);
             
         glfwMakeContextCurrent(m_window);

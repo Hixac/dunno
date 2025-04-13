@@ -2,6 +2,7 @@
 #include <misc/camera.hpp>
 
 #include <window.hpp>
+#include <misc/distributer.hpp>
 
 int main(int argc, const char **argv) {
 
@@ -11,8 +12,10 @@ int main(int argc, const char **argv) {
     Object::Cube cube;
     cube.SetTexture("res/me.jpg");
     cube.transform.Translate({0, 0, 0});
-
+    cube.transform.Scale({10, 10, 10});
+    
     while (window.CheckHealth()) {
+        Misc::Distributer::Get().CalculateFrameTime();
         window.NewFrame();
         
         Misc::Camera::Logic();

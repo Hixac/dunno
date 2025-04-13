@@ -59,6 +59,12 @@ namespace Object {
         return *this;
     }
 
+    Transform Transform::LookAt(vec3 eye, vec3 center, vec3 up) {
+        m_trans = glm::lookAt(eye, center, up);
+
+        return *this;
+    }
+    
     Transform Transform::Ortho(float left, float right, float bottom, float top, float z_near, float z_far) {
         m_trans = glm::ortho(left, right, bottom, top, z_near, z_far);
 

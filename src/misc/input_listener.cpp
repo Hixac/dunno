@@ -1,24 +1,24 @@
-#include <misc/key_listener.hpp>
+#include <misc/input_listener.hpp>
 
 #include <GLFW/glfw3.h>
 
 namespace Misc {
 
-    Status Keys::operator()(std::string_view v) {
-        if (!keys_statuses.contains(v)) {
+    Status Input::operator()(std::string_view v) {
+        if (!statuses.contains(v.data())) {
             return Status::None;
         }
                
-        return keys_statuses[v];
+        return statuses.at(v.data());
     }
 
-    void Keys::Clear() {
-        keys_statuses.clear();
+    void Input::Clear() {
+        statuses.clear();
     }
     
     void _key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
         auto& ref = Keys::Get();
-        std::string_view key_str;
+        std::string key_str;
         
         if (key == GLFW_KEY_SPACE) {
             key_str = " ";
@@ -169,6 +169,49 @@ namespace Misc {
             return;
         }
         
-        ref.keys_statuses[key_str] = static_cast<Status>(action + 1);
+        ref.statuses[key_str] = static_cast<Status>(action + 1);
+    }
+
+    void _mouse_callback(GLFWwindow* window, int button, int action, int mods) {
+        auto& ref = Mouse::Get();
+        std::string key_str;
+
+        switch (button) {
+        case GLFW_MOUSE_BUTTON_4:
+            key_str = "4";
+            break;
+        case GLFW_MOUSE_BUTTON_5:
+            key_str = "5";
+            break;
+        case GLFW_MOUSE_BUTTON_6:
+            key_str = "6";
+            break;
+        case GLFW_MOUSE_BUTTON_7:
+            key_str = "7";
+            break;
+        case GLFW_MOUSE_BUTTON_LAST:
+            key_str = "last";
+            break;
+        case GLFW_MOUSE_BUTTON_LEFT:
+            key_str = "left";
+            break;
+        case GLFW_MOUSE_BUTTON_RIGHT:
+            key_str = "right";
+            break;
+        case GLFW_MOUSE_BUTTON_MIDDLE:
+            key_str = "middle";
+            break;
+        default:
+            return;
+        }
+
+        ref.statuses[key_str] = static_cast<Status>(action + 1);
+    }
+    
+    void _cursor_callback(GLFWwindow* window, double xpos, double ypos) {
+        auto& ref = Misc::Mouse::Get();
+
+        ref.pos.x = xpos;
+        ref.pos.y = ypos;
     }
 }

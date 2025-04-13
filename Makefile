@@ -1,48 +1,45 @@
-INCS := -Iext/glfw-static/include/ -Iext/glad/include/ -Isrc/ -Isrc/ -Iext/stb/ -Iext/imgui/
-DIR_LIBS := -Lext/glfw-static/ -Lext/glm/
-LIBS := -lglfw3 -lglm
-
-SOURCES := $(shell find src/ -name '*.cpp')
-HEADERS := $(shell find src/ -name '*.hpp')
-OBJS := $(notdir $(SOURCES:%.cpp=%.o))
-OBJS += glad.o imgui.o imgui_demo.o imgui_draw.o imgui_impl_glfw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o
-
+# compiler
 CXX := g++
-FLAGS := -std=c++23 -Wall -Wpedantic
+CC := gcc
+CXXFLAGS := -std=c++23 -Wall -Wpedantic \
+			-Iext/glfw-static/include/ -Iext/glad/include/ -Isrc/ -Isrc/ -Iext/stb/ -Iext/imgui/
+DEPFLAGS := -MMD -MP
 
+# deps
 EXEC := main
 
-.PHONY: all debug main_goal clean
+EXT_DIR := ext
+SRC_DIR := src
 
-all: main_goal
+LDFLAGS := -Lext/glfw-static/ -Lext/glm/
+LIBS := -lglfw3 -lglm
 
-main_goal: $(OBJS)
-	$(CXX) $(FLAGS) -o $(EXEC) $(OBJS) $(DIR_LIBS) $(LIBS)
+SOURCES := $(shell find $(SRC_DIR) -name '*.cpp')
+HEADERS := $(shell find $(SRC_DIR) -name '*.hpp')
+OBJS := $(addsuffix .o,$(basename $(notdir $(SOURCES)))) glad.o \
+		imgui.o imgui_demo.o \
+		imgui_draw.o imgui_tables.o \
+		imgui_widgets.o imgui_impl_glfw.o \
+		imgui_impl_opengl3.o
+DEPS := $(patsubst %.cpp,%.d,$(SOURCES))
 
-%.o: src/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+VPATH = $(shell find $(SRC_DIR) -maxdepth 1 -type d) $(EXT_DIR)/imgui
 
-%.o: src/engine/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+# rules
+.PHONY: all debug clean
 
-%.o: src/transforms/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+all: $(EXEC)
 
-%.o: src/objects/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+$(EXEC): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
 
-%.o: src/misc/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+%.o: %.cpp Makefile
+	$(CXX) $(CXXFLAGS) $(DEPFLAGS) -c $< -o $@
 
-%.o: ext/imgui/%.cpp
-	$(CXX) $(FLAGS) -c $^ $(INCS)
+-include $(DEPS)
 
-glad.o: ext/glad/src/glad.c
+glad.o: $(EXT_DIR)/glad/src/glad.c
 	gcc -c $^ -Iext/glad/include/
 
 clean:
 	rm -f *.o $(EXEC)
-
-debug: FLAGS += -g
-debug: clean main_goal
-	gdb $(EXEC)
