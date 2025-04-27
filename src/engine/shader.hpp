@@ -16,8 +16,9 @@ namespace My {
     class Shader {
     public:
         Shader(ShaderType type);
-        ~Shader();
+        ~Shader() = default;
 
+        void Delete();
         void Source(const std::vector<std::filesystem::path> v_path);
         void Compile();
         void LinkTo(Program& pr);

@@ -10,10 +10,10 @@ namespace My {
         m_randid = glCreateShader(static_cast<uint32_t>(type));
     }
 
-    Shader::~Shader() {
+    void Shader::Delete() {
         glDeleteShader(m_randid);
     }
-
+    
     void Shader::Source(const std::vector<std::filesystem::path> v_path) {
         std::vector<char*> v_s;
         

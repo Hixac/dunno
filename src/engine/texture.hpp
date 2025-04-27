@@ -7,7 +7,7 @@ namespace My {
     class Texture {
     public:
         Texture(size_t tex_unit = 0);
-        ~Texture() = default; // may be used later for deleting file
+        ~Texture() = default;
 
         void Bind();
         void Load(std::string_view filepath);

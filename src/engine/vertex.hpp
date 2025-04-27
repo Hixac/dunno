@@ -8,10 +8,11 @@ namespace My {
 
     class Vertex {
     public:
-        Vertex(const std::vector<float>& obj_info, size_t stride, DrawingType type);
+        Vertex(size_t size_of_array, void* ref_to_first_el, size_t stride, DrawingType type);
 
         void BindVertArr();
-        
+        void UnbindVertArr();
+            
         void AddAttribute(unsigned int size);
 
     private:

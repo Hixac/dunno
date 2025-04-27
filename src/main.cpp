@@ -18,7 +18,11 @@ int main(int argc, const char **argv) {
         Misc::Distributer::Get().CalculateFrameTime();
         window.NewFrame();
         
-        Misc::Camera::Logic();
+        bool spaced = My::Input("left") == My::Status::Press_Or_Repeat;
+        window.EnableCursor(!spaced);
+        if (spaced) {
+            Misc::Camera::Logic();
+        }
         
         OpenGl::clear();
 

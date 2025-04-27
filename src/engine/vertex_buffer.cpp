@@ -8,9 +8,9 @@ namespace My {
         glGenBuffers(1, &m_randid);
     }
 
-    void VertexBuffer::Bind(const std::vector<float>& v_f, DrawingType type) {
+    void VertexBuffer::Bind(size_t size_of_array, void* ref_to_first_el, DrawingType type) {
         glBindBuffer(GL_ARRAY_BUFFER, m_randid);
-        glBufferData(GL_ARRAY_BUFFER, v_f.size() * sizeof(float), &v_f[0], static_cast<unsigned int>(type));
+        glBufferData(GL_ARRAY_BUFFER, size_of_array * sizeof(float), ref_to_first_el, static_cast<unsigned int>(type));
     }
     
 }

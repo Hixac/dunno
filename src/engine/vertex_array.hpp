@@ -8,6 +8,7 @@ namespace My {
         ~VertexArray() = default;
 
         void Bind();
+        void Unbind();
 
         void AddAttribute(unsigned int size, unsigned int stride);
 

@@ -7,16 +7,15 @@
 
 namespace My {
 
-    using Misc::Mouse;
     using Misc::Status;
-    struct Keys {
-        inline Keys(std::string_view v)
+    struct Input {
+        inline Input(std::string_view v)
             : m_v(v) {}
 
         inline bool operator==(Status s) {
-            auto ks = Misc::Keys::Get()(m_v);
+            auto ks = Misc::Input::Get()(m_v);
             
-            if (s == Status::Press_Or_Release) {
+            if (s == Status::Press_Or_Repeat) {
                 return ks == Status::Press || ks == Status::Repeat;
             }
             return ks == s;
@@ -37,6 +36,8 @@ namespace My {
         
         void SwapBuffers();
         bool CheckHealth();
+
+        void EnableCursor(bool);
         
     private:
         std::string_view m_name;

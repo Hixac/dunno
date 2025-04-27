@@ -15,7 +15,7 @@ namespace My {
         VertexBuffer();
         ~VertexBuffer() = default;
 
-        void Bind(const std::vector<float>& v_f, DrawingType type);
+        void Bind(size_t size_of_array, void* ref_to_first_el, DrawingType type);
         
     private:
         unsigned int m_randid;

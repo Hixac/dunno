@@ -5,23 +5,23 @@
 namespace Misc {
 
     Status Input::operator()(std::string_view v) {
-        if (!statuses.contains(v.data())) {
+        if (!key_statuses.contains(v.data())) {
             return Status::None;
         }
                
-        return statuses.at(v.data());
+        return key_statuses.at(v.data());
     }
 
     void Input::Clear() {
-        statuses.clear();
+        key_statuses.clear();
     }
     
     void _key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-        auto& ref = Keys::Get();
+        auto& ref = Input::Get();
         std::string key_str;
         
         if (key == GLFW_KEY_SPACE) {
-            key_str = " ";
+            key_str = "space";
         }
         else if (key == GLFW_KEY_APOSTROPHE) {
             key_str = "'";
@@ -169,11 +169,11 @@ namespace Misc {
             return;
         }
         
-        ref.statuses[key_str] = static_cast<Status>(action + 1);
+        ref.key_statuses[key_str] = static_cast<Status>(action + 1);
     }
 
     void _mouse_callback(GLFWwindow* window, int button, int action, int mods) {
-        auto& ref = Mouse::Get();
+        auto& ref = Input::Get();
         std::string key_str;
 
         switch (button) {
@@ -205,13 +205,13 @@ namespace Misc {
             return;
         }
 
-        ref.statuses[key_str] = static_cast<Status>(action + 1);
+        ref.key_statuses[key_str] = static_cast<Status>(action + 1);
     }
     
     void _cursor_callback(GLFWwindow* window, double xpos, double ypos) {
-        auto& ref = Misc::Mouse::Get();
+        auto& ref = Misc::Input::Get();
 
-        ref.pos.x = xpos;
-        ref.pos.y = ypos;
+        ref.mouse_pos.x = xpos;
+        ref.mouse_pos.y = ypos;
     }
 }

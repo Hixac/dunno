@@ -15,47 +15,26 @@ namespace Misc {
         Release,
         Press,
         Repeat,
-        Press_Or_Release
+        Press_Or_Repeat
     };
 
     class Input {
     private:
-        friend class Mouse;
-        friend class Keys;
-
         Input() = default;
-        
     public:
+        static Input& Get() {
+            static Input var;
+
+            return var;
+        }
+        
         Status operator()(std::string_view);
         void Clear();
         
-        std::unordered_map<std::string, Status> statuses;
+        std::unordered_map<std::string, Status> key_statuses;
+
+        vec2 mouse_pos = {};
     };
-    
-    class Mouse : public Input {
-    public:
-        static Mouse& Get() {
-            static Mouse m;
-
-            return m;
-        }
-
-        vec2 pos = {};
-    private:
-        Mouse() = default;    
-    };
-    
-    class Keys : public Input {
-    public:
-        static Keys& Get() {
-            static Keys k;
-
-            return k;
-        }
-    private:
-        Keys() = default;
-    };
-
 
     void _key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void _mouse_callback(GLFWwindow* window, int button, int action, int mods);

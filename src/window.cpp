@@ -28,8 +28,6 @@ namespace My {
             std::cout << "FATAL: glfw window hasn't created well!" << std::endl;
             std::abort();
         }
-
-        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         
         glfwSetMouseButtonCallback(m_window, Misc::_mouse_callback);
         glfwSetCursorPosCallback(m_window, Misc::_cursor_callback);
@@ -65,6 +63,14 @@ namespace My {
     
     void Window::SwapBuffers() {
         glfwSwapBuffers(m_window);
+    }
+
+    void Window::EnableCursor(bool b) {
+        if (!b) {
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            return;
+        }
+        glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     }
     
     bool Window::CheckHealth() {

@@ -27,5 +27,8 @@ namespace OpenGl {
     static void draw_cube() {
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
-    
+
+    static void draw_elems(size_t indices_size) {
+        glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
+    }
 }

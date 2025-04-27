@@ -16,6 +16,10 @@ namespace My {
         glBindVertexArray(m_randid);
     }
 
+    void VertexArray::Unbind() {
+        glBindVertexArray(0);
+    }
+    
     void VertexArray::AddAttribute(unsigned int size, unsigned int stride) {
         m_sum_sizes += size;
 
