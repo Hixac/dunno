@@ -1,0 +1,19 @@
+[
+    {
+        "arguments": [
+            "/usr/bin/g++",
+            "-std=c++23",
+            "-c",
+            "-Iext/glfw-static/include/",
+            "-Iext/glad/include/",
+            "-Iext/glm/",
+            "-Iext/imgui/",
+            "-Isrc/engine/",
+            "-Isrc/",
+            "-Iext/stb/",
+            "src/main.cpp"
+        ],
+        "directory": "/home/hixac/Projects/WTFAMDOIN",
+        "file": "/home/hixac/Projects/WTFAMDOIN/src/main.cpp"
+    }
+]
