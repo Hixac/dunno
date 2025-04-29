@@ -6,7 +6,7 @@
             "-c",
             "-Iext/glfw-static/include/",
             "-Iext/glad/include/",
-            "-Iext/glm/",
+            "-Iext/",
             "-Iext/imgui/",
             "-Isrc/engine/",
             "-Isrc/",

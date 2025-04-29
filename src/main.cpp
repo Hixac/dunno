@@ -10,7 +10,6 @@ int main(int argc, const char **argv) {
     OpenGl::init();
 
     Object::Cube cube;
-    cube.SetTexture("res/me.jpg");
     cube.transform.Translate({0, 0, 0});
     cube.transform.Scale({10, 10, 10});
     

@@ -8,9 +8,6 @@ namespace Object {
     Cube::Cube()
         : transform(1.f) {
 
-        m_meshes.emplace_back(
-            
-            );
     }
 
     void Cube::Render() {
