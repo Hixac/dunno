@@ -30,6 +30,10 @@ VPATH = $(shell find $(SRC_DIR) -maxdepth 1 -type d) $(EXT_DIR)/imgui
 
 all: $(EXEC)
 
+debug:CXXFLAGS+=-g
+debug: $(EXEC)
+	gdb $(EXEC)
+
 $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
 

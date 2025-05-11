@@ -7,8 +7,6 @@
             "-Iext/glfw-static/include/",
             "-Iext/glad/include/",
             "-Iext/glm/",
-            "-Iext/imgui/",
-            "-Isrc/engine/",
             "-Isrc/",
             "-Iext/stb/",
             "src/main.cpp"

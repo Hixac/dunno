@@ -32,7 +32,7 @@ namespace My {
             m_last_id,
             size,
             GL_FLOAT,
-            false,
+            GL_FALSE,
             stride * sizeof(float),
             (void*)((m_sum_sizes - size) * sizeof(float)) 
             );

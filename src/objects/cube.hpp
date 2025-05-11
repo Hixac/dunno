@@ -2,6 +2,7 @@
 
 #include <engine.hpp>
 
+#include <transforms/primitives.hpp>
 #include <transforms/transform.hpp>
 #include <objects/mesh.hpp>
 
@@ -15,6 +16,7 @@ namespace Object {
         
         Transform transform;
     private:
+        My::Program m_prog;
         std::vector<Mesh> m_meshes;
     };
     

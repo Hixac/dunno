@@ -3,6 +3,8 @@
 #include <string>
 #include <string_view>
 #include <map>
+#include <filesystem>
+
 #include <glm/glm.hpp>
 
 namespace My {
@@ -12,6 +14,8 @@ namespace My {
         Program();
         ~Program();
 
+        void Source(std::vector<std::filesystem::path> vert_path, std::vector<std::filesystem::path> frag_path);
+        
         void Attach(unsigned int shader_id);
         void LinkAll();
         void Use();

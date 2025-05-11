@@ -10,7 +10,6 @@ int main(int argc, const char **argv) {
     OpenGl::init();
 
     Object::Cube cube;
-    cube.SetTexture("res/me.jpg");
     cube.transform.Translate({0, 0, 0});
     cube.transform.Scale({10, 10, 10});
     
@@ -18,7 +17,7 @@ int main(int argc, const char **argv) {
         Misc::Distributer::Get().CalculateFrameTime();
         window.NewFrame();
         
-        bool spaced = My::Input("left") == My::Status::Press_Or_Repeat;
+        bool spaced = My::Input("right") == My::Status::Press_Or_Repeat;
         window.EnableCursor(!spaced);
         if (spaced) {
             Misc::Camera::Logic();

@@ -1,8 +1,9 @@
 #include <engine/shader_program.hpp>
 
 #include <glad/glad.h>
-
 #include <glm/gtc/type_ptr.hpp>
+
+#include <engine/shader.hpp>
 
 #include <iostream>
 
@@ -17,6 +18,20 @@ namespace My {
         glDeleteProgram(m_randid);
     }
 
+    void Program::Source(std::vector<std::filesystem::path> vert_path, std::vector<std::filesystem::path> frag_path) {
+        {
+            My::Shader vert(My::ShaderType::VERTEX);
+            vert.Source(vert_path);
+            vert.Compile();
+            vert.LinkTo(*this);
+
+            My::Shader frag(My::ShaderType::FRAGMENT);
+            frag.Source(frag_path);
+            frag.Compile();
+            frag.LinkTo(*this);
+        }
+    }
+    
     void Program::Attach(uint32_t shader_id) {
         glAttachShader(m_randid, shader_id);
     }
