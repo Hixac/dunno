@@ -2,8 +2,8 @@
 CXX := g++
 CC := gcc
 CXXFLAGS := -std=c++23 -Wall -Wpedantic \
-			-Iext/glfw-static/include/ -Iext/glad/include/ -Isrc/ -Isrc/ -Iext/stb/ -Iext/imgui/
-DEPFLAGS := -MMD -MP
+			-Iext/glfw-static/include/ -Iext/glad/include/ -Iext/ -Isrc/ -Iext/stb/ -Iext/imgui/
+DEPFLAGS := 
 
 # deps
 EXEC := main
@@ -23,7 +23,7 @@ OBJS := $(addsuffix .o,$(basename $(notdir $(SOURCES)))) glad.o \
 		imgui_impl_opengl3.o
 DEPS := $(patsubst %.cpp,%.d,$(SOURCES))
 
-VPATH = $(shell find $(SRC_DIR) -maxdepth 1 -type d) $(EXT_DIR)/imgui
+VPATH = $(shell find $(SRC_DIR) -maxdepth 1 -type d) $(EXT_DIR)/imgui $(EXT_DIR)/glm
 
 # rules
 .PHONY: all debug clean
@@ -40,10 +40,8 @@ $(EXEC): $(OBJS)
 %.o: %.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(DEPFLAGS) -c $< -o $@
 
--include $(DEPS)
-
 glad.o: $(EXT_DIR)/glad/src/glad.c
-	gcc -c $^ -Iext/glad/include/
+	$(CC) -c $^ -Iext/glad/include/
 
 clean:
 	rm -f *.o $(EXEC)
