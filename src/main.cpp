@@ -10,9 +10,9 @@ int main(int argc, const char **argv) {
     OpenGl::init();
 
     Object::Cube cube;
-    cube.transform.Translate({0, 0, 0});
+    cube.transform.Translate({0, 0, -10});
     cube.transform.Scale({10, 10, 10});
-    
+
     while (window.CheckHealth()) {
         Misc::Distributer::Get().CalculateFrameTime();
         window.NewFrame();
@@ -22,10 +22,16 @@ int main(int argc, const char **argv) {
         if (spaced) {
             Misc::Camera::Logic();
         }
-        
+
+        vec2 win_size = window.GetSize();
+        OpenGl::adapt_viewport(win_size.x, win_size.y);
         OpenGl::clear();
 
-        cube.transform.Rotate(1, {0, 1, 1});
+        Object::Ray ray = Misc::Camera::GetRay();
+        OpenGl::draw_ray(ray, 100.f);
+        //std::cout << cube.Collision(ray) << " is rayed\n";
+        
+        //cube.transform.Rotate(1, {0, 1, 1});
         cube.Render();
 
         window.Render();

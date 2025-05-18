@@ -1,6 +1,18 @@
 #include <objects/mesh.hpp>
 
 namespace Object {
+
+    Mesh::Mesh(std::vector<float>& vertices) {
+        m_varr = My::create_vertex_array();
+        
+        m_vertices = vertices;
+        auto vbuff = My::create_vertex_buffer(vertices.size(), &vertices[0]);
+        vbuff->AddLayer(3);
+        vbuff->AddLayer(3);
+        vbuff->AddLayer(2);
+
+        m_varr->SetVertexBuffer(vbuff);
+    }
     
     Mesh::Mesh(std::vector<float>& vertices, std::vector<size_t>& indices, std::vector<My::Texture>& textures) {
         m_varr = My::create_vertex_array();

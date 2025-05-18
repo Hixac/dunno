@@ -5,8 +5,7 @@
 namespace Object {
 
     Cube::Cube()
-        : transform(1.f)
-        , m_prog() {
+        : transform(1.f), m_prog(), m_collider() {
 
         My::Texture tex;
         tex.Load("res/me.jpg");
@@ -20,6 +19,8 @@ namespace Object {
         
         m_prog.Source({"res/default.vert"}, {"res/default.frag"});
         m_prog.LinkAll();
+
+        m_collider.SetAABB(transform.Position() - 0.5f * transform.Scale(), transform.Position() + 0.5f * transform.Scale());
     }
 
     void Cube::Render() {
@@ -30,6 +31,10 @@ namespace Object {
         for (auto& mesh : m_meshes) {
             mesh.Draw(m_prog);
         }
+    }
+
+    bool Cube::Collision(const Ray& ray) const {
+        return m_collider.Intersect(ray);
     }
     
 }

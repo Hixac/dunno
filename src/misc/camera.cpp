@@ -1,13 +1,10 @@
 #include <misc/camera.hpp>
 
-#include <iostream>
-
 namespace Misc {
 
     void Camera::Logic() {
         vec2 offset = {Input::Get().mouse_pos.x - last.x, last.y - Input::Get().mouse_pos.y};
         last = Input::Get().mouse_pos;
-        std::cout << last.x << ' ' << last.y << '\n';
         offset *= sensitivity;
 
         yaw += offset.x;
@@ -41,6 +38,10 @@ namespace Misc {
 
         View::Get().view.Reset();
         View::Get().view.LookAt(pos, pos + front, up);
+    }
+
+    Object::Ray Camera::GetRay() {
+        return Object::Ray(pos, front);
     }
     
 }

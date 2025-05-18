@@ -5,6 +5,8 @@
 #include <engine/texture.hpp>
 #include <engine/vertex_array.hpp>
 
+#include <transforms/ray.hpp>
+
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -29,6 +31,14 @@ namespace OpenGl {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    static void adapt_viewport(int w, int h) {
+        glViewport(0, 0, w, h);
+    }
+
+    static void draw_lines(size_t count) {
+        glDrawArrays(GL_LINES, 0, count);
+    }
+    
     static void draw_vertices(size_t count) {
         glDrawArrays(GL_TRIANGLES, 0, count);
     }
@@ -36,4 +46,6 @@ namespace OpenGl {
     static void draw_elems(size_t indices_size) {
         glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
     }
+
+    void draw_ray(const Object::Ray& ray, float len);
 }

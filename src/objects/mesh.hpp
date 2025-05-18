@@ -7,11 +7,14 @@ namespace Object {
     
     class Mesh {
     public:
+        Mesh() = delete;
+        Mesh(std::vector<float>& vertices);
         Mesh(std::vector<float>& vertices,
              std::vector<size_t>& indices,
              std::vector<My::Texture>& textures);
 
         void Draw(My::Program& shader_program);
+
     private:
         
         std::shared_ptr<My::VertexArray> m_varr;

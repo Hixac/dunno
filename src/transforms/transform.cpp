@@ -86,5 +86,12 @@ namespace Object {
     mat4 Transform::Get() {
         return m_trans;
     }
-    
+
+    vec3 Transform::Position() {
+        return { m_trans[3].x, m_trans[3].y, m_trans[3].z };
+    }
+
+    vec3 Transform::Scale() {
+        return { m_trans[0].x, m_trans[1].y, m_trans[3].z };
+    }
 }

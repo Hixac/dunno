@@ -2,6 +2,7 @@
 
 #include <window.hpp>
 #include <transforms/world_view.hpp>
+#include <transforms/ray.hpp>
 
 #include <misc/input_listener.hpp>
 #include <misc/distributer.hpp>
@@ -10,6 +11,7 @@ namespace Misc {
 
     struct Camera {
         static void Logic();
+        static Object::Ray GetRay();
         
     private:
         static inline float yaw = 0;

@@ -43,6 +43,8 @@ namespace Object {
         Transform Reset();
         
         mat4 Get();
+        vec3 Position();
+        vec3 Scale();
         
     private:
         mat4 m_trans;

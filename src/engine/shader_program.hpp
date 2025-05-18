@@ -18,7 +18,7 @@ namespace My {
         
         void Attach(unsigned int shader_id);
         void LinkAll();
-        void Use();
+        void Use() const;
 
         void SetVarFloat(const std::string& v, float f);
         void SetVarMat4(const std::string& v, const glm::mat4& m);
@@ -30,5 +30,10 @@ namespace My {
         std::map<std::string, int> m_vars;
         unsigned int m_randid;
     };
+
+    static auto create_shader_program() {
+        return std::make_shared<Program>();
+    }
+
     
 }

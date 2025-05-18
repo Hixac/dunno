@@ -3,7 +3,7 @@
 #include <misc/input_listener.hpp>
 
 #include <GLFW/glfw3.h>
-#include <string_view>
+#include <string>
 
 namespace My {
 
@@ -28,9 +28,11 @@ namespace My {
     class Window {
     public:
         Window() = delete;
-        Window(uint32_t x_size, uint32_t y_size, std::string_view name);
+        Window(uint32_t x_size, uint32_t y_size, const std::string& name);
         ~Window();
 
+        vec2 GetSize();
+        
         void NewFrame();
         void Render();
         
@@ -40,9 +42,8 @@ namespace My {
         void EnableCursor(bool);
         
     private:
-        std::string_view m_name;
-        uint32_t m_x_size, m_y_size;
+        std::string m_name;
         GLFWwindow *m_window;
     };
-
+    
 }

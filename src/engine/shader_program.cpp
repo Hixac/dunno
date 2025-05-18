@@ -46,7 +46,7 @@ namespace My {
         }
     }
 
-    void Program::Use() {
+    void Program::Use() const {
         glUseProgram(m_randid);
     }
     

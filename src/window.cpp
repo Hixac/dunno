@@ -8,9 +8,12 @@
 
 namespace My {
 
-    Window::Window(uint32_t x_size, uint32_t y_size, std::string_view name)
-        : m_name(std::move(name)), m_x_size(x_size), m_y_size(y_size) {
-
+    static void _window_size_callback(GLFWwindow* win, int w, int h) {
+        glfwSetWindowSize(win, w, h);
+    }
+    
+    Window::Window(uint32_t x_size, uint32_t y_size, const std::string& name)
+        : m_name(name) {
         
         glfwSetErrorCallback([](int error, const char* description) {
             fprintf(stderr, "Error: %s\n", description);
@@ -33,7 +36,8 @@ namespace My {
         glfwSetMouseButtonCallback(m_window, Misc::_mouse_callback);
         glfwSetCursorPosCallback(m_window, Misc::_cursor_callback);
         glfwSetKeyCallback(m_window, Misc::_key_callback);
-            
+        glfwSetWindowSizeCallback(m_window, _window_size_callback);
+        
         glfwMakeContextCurrent(m_window);
         glfwSwapInterval(1);
 		IMGUI_CHECKVERSION();
@@ -47,6 +51,13 @@ namespace My {
     Window::~Window() {
         glfwDestroyWindow(m_window);
         glfwTerminate();
+    }
+
+    vec2 Window::GetSize() {
+        int w, h;
+        glfwGetWindowSize(m_window, &w, &h);
+        
+        return {w, h};
     }
     
     void Window::Render() {
@@ -77,5 +88,5 @@ namespace My {
     bool Window::CheckHealth() {
         return !glfwWindowShouldClose(m_window);
     }
-    
+
 }
