@@ -11,6 +11,7 @@ namespace My {
     Window::Window(uint32_t x_size, uint32_t y_size, std::string_view name)
         : m_name(std::move(name)), m_x_size(x_size), m_y_size(y_size) {
 
+        
         glfwSetErrorCallback([](int error, const char* description) {
             fprintf(stderr, "Error: %s\n", description);
         });

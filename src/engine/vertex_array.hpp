@@ -1,21 +1,30 @@
 #pragma once
 
+#include <engine/buffer.hpp>
+#include <memory>
+
 namespace My {
 
     class VertexArray {
     public:
         VertexArray();
-        ~VertexArray() = default;
+        ~VertexArray();
 
-        void Bind();
-        void Unbind();
+        void Bind() const;
+        void Unbind() const;
 
-        void AddAttribute(unsigned int size, unsigned int stride);
+        void SetVertexBuffer(const std::shared_ptr<VertexBuffer>& vbuff);
+        void SetElementBuffer(const std::shared_ptr<ElementBuffer>& ebuff);
 
     private:
+        std::shared_ptr<VertexBuffer> m_vbuff;
+        std::shared_ptr<ElementBuffer> m_ebuff;
         int m_last_id;
-        unsigned int m_sum_sizes;
         unsigned int m_randid;
     };
+
+    static auto create_vertex_array() {
+        return std::make_shared<VertexArray>();
+    }
     
 }

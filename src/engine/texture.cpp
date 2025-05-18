@@ -10,7 +10,7 @@ namespace My {
 
     Texture::Texture(size_t tex_unit)
         : m_tex_unit(tex_unit) {
-        glGenTextures(1, &m_tex);
+        glCreateTextures(GL_TEXTURE_2D, 1, &m_tex);
 
         if (tex_unit > 15) {
             std::cerr << "FATAL: you reached maximum number of texture units!" << std::endl;

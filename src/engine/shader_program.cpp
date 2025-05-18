@@ -19,17 +19,15 @@ namespace My {
     }
 
     void Program::Source(std::vector<std::filesystem::path> vert_path, std::vector<std::filesystem::path> frag_path) {
-        {
-            My::Shader vert(My::ShaderType::VERTEX);
-            vert.Source(vert_path);
-            vert.Compile();
-            vert.LinkTo(*this);
+        My::Shader vert(My::ShaderType::VERTEX);
+        vert.Source(vert_path);
+        vert.Compile();
+        vert.LinkTo(*this);
 
-            My::Shader frag(My::ShaderType::FRAGMENT);
-            frag.Source(frag_path);
-            frag.Compile();
-            frag.LinkTo(*this);
-        }
+        My::Shader frag(My::ShaderType::FRAGMENT);
+        frag.Source(frag_path);
+        frag.Compile();
+        frag.LinkTo(*this);
     }
     
     void Program::Attach(uint32_t shader_id) {
@@ -67,23 +65,23 @@ namespace My {
     }
     
     void Program::SetVarFloat(const std::string& v, float f) {
+        Use();
         DetectVarLocation(v.data());
         
-        Use();
         glUniform1f(m_vars[v], f);
     }
 
     void Program::SetVarMat4(const std::string& v, const glm::mat4& m) {
+        Use();
         DetectVarLocation(v.data());
 
-        Use();
         glUniformMatrix4fv(m_vars[v], 1, GL_FALSE, glm::value_ptr(m));
     }
     
     void Program::SetVarInt(const std::string& v, int i) {
+        Use();
         DetectVarLocation(v.data());
 
-        Use();
         glUniform1i(m_vars[v], i);
     }
 }

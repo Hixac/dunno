@@ -1,44 +1,56 @@
 #include <engine/vertex_array.hpp>
 
-#include <iostream>
-
 #include <glad/glad.h>
 
 namespace My {
 
-    VertexArray::VertexArray()
-        : m_last_id(0)
-        , m_sum_sizes(0) {
-        glGenVertexArrays(1, &m_randid);
+    VertexArray::VertexArray() {
+        glCreateVertexArrays(1, &m_randid);
     }
 
-    void VertexArray::Bind() {
+    VertexArray::~VertexArray() {
+        glDeleteVertexArrays(1, &m_randid);
+    }
+    
+    void VertexArray::Bind() const {
         glBindVertexArray(m_randid);
     }
 
-    void VertexArray::Unbind() {
+    void VertexArray::Unbind() const {
         glBindVertexArray(0);
     }
-    
-    void VertexArray::AddAttribute(unsigned int size, unsigned int stride) {
-        m_sum_sizes += size;
 
-        if (m_sum_sizes > stride) {
-            std::cerr << "FATAL: sum of all size added in attributes is more than stride!" << std::endl;
-            std::abort();
-        }
+    void VertexArray::SetVertexBuffer(const std::shared_ptr<VertexBuffer>& vbuff) {
+        size_t sum_sizes = 0;
+        unsigned char last_id = 0;
+
+        Bind();
+        vbuff->Bind();
         
-        glVertexAttribPointer(
-            m_last_id,
-            size,
-            GL_FLOAT,
-            GL_FALSE,
-            stride * sizeof(float),
-            (void*)((m_sum_sizes - size) * sizeof(float)) 
-            );
-        glEnableVertexAttribArray(m_last_id);
+        for (size_t size : vbuff->GetLayers()) {
+            sum_sizes += size;
+            
+            glEnableVertexAttribArray(last_id);
+            glVertexAttribPointer(
+                last_id,
+                size,
+                GL_FLOAT,
+                GL_FALSE,
+                vbuff->GetStride() * sizeof(float),
+                (void*)((sum_sizes - size) * sizeof(float)) 
+                );
 
-        m_last_id += 1;
+            last_id += 1;
+        }
+
+        m_vbuff = vbuff;
+    }
+
+    void VertexArray::SetElementBuffer(const std::shared_ptr<ElementBuffer>& ebuff) {
+        Bind();
+        ebuff->Bind();
+
+        m_ebuff = ebuff;
     }
     
 }

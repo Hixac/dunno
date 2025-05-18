@@ -2,27 +2,22 @@
 
 namespace Object {
     
-    Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices, std::vector<My::Texture>& textures)
-        : m_vert(vertices.size() * sizeof(Vertex),
-                 &vertices[0],
-                 indices.size() * sizeof(unsigned int),
-                 &indices[0], 8,
-                 My::DrawingType::STATIC_DRAW) {
-        m_vertices = vertices;
-        m_indices = indices;
-        m_textures = textures;
-
-        m_vert.BindVertArr();
+    Mesh::Mesh(std::vector<float>& vertices, std::vector<size_t>& indices, std::vector<My::Texture>& textures) {
+        m_varr = My::create_vertex_array();
         
-        SetupMesh();
-    }
+        m_vertices = vertices;
+        m_indices  = indices;
+        m_textures = textures;
+        
+        auto vbuff = My::create_vertex_buffer(vertices.size(), &vertices[0]);
+        vbuff->AddLayer(3);
+        vbuff->AddLayer(3);
+        vbuff->AddLayer(2);
 
-    void Mesh::SetupMesh() {
-        m_vert.AddAttribute(3);
-        m_vert.AddAttribute(3);
-        m_vert.AddAttribute(2);
+        auto ebuff = My::create_element_buffer(indices.size(), &indices[0]);
 
-        m_vert.UnbindVertArr();
+        m_varr->SetVertexBuffer(vbuff);
+        m_varr->SetElementBuffer(ebuff);
     }
     
     void Mesh::Draw(My::Program& shader_program) {
@@ -30,9 +25,10 @@ namespace Object {
             m_textures[i].Bind();
         }
 
-        m_vert.BindVertArr();
-        OpenGl::draw_elems(m_indices.size());
-        m_vert.UnbindVertArr();
+        shader_program.Use();
+        m_varr->Bind();
+        OpenGl::draw_vertices(6);
+        m_varr->Unbind();
     }
     
 }

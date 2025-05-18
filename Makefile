@@ -30,10 +30,6 @@ VPATH = $(shell find $(SRC_DIR) -maxdepth 1 -type d) $(EXT_DIR)/imgui $(EXT_DIR)
 
 all: $(EXEC)
 
-debug:CXXFLAGS+=-g
-debug: $(EXEC)
-	gdb $(EXEC)
-
 $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
 
@@ -45,3 +41,7 @@ glad.o: $(EXT_DIR)/glad/src/glad.c
 
 clean:
 	rm -f *.o $(EXEC)
+
+debug:CXXFLAGS+=-g
+debug: clean $(EXEC)
+	gdb $(EXEC)
